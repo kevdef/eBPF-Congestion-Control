@@ -1,5 +1,5 @@
 #!/bin/bash
-chmod a+r /sys/kernel/debug/tracing/
+chmod a+r /sys/kernel/debug/tracing/ 
 echo > /sys/kernel/debug/tracing/trace
 echo 1 > /sys/kernel/debug/tracing/events/tcp/tcp_probe/enable
 iperf3 -s &
