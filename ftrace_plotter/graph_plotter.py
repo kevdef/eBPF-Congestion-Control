@@ -1,17 +1,19 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import re
 
 def plot():
     snd_cwnd=[]
     with open ('data.txt', 'rt') as myfile:
         for line in myfile:
-            snd_cwnd.append(float(line))
+            if line.strip():
+                snd_cwnd.append(float(line))
     times=[]
     with open ('times.txt', 'rt') as myfile:
         for line in myfile:
-            times.append(float(line))
-
+            if re.match(r'^-?\d+(?:\.\d+)?$', line) is not None:
+                times.append(float(line))
     plt.scatter(times, snd_cwnd)
 
     plt.xlabel('time')
@@ -23,6 +25,7 @@ def plot():
     while True:
         pathNameNum += 1
         newname = '{}{:d}.png'.format("cwnd_over_time", pathNameNum)
+        newname = './cwnd-over-time/{}'.format(newname)
         if os.path.exists(newname):
             continue
         plt.savefig(newname)
